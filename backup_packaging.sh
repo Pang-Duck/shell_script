@@ -9,17 +9,17 @@ SOURCE_DIR=appliance
 DEST_DIR=test_appliance
 
 SERVER_IP=192.168.0.30
-DUMMY_VALUE='{dti_setting_ip}'
+DUMMY_VALUE='{pangduck_setting_ip}'
 
-CLICKHOUSE_PARENT=${DEST_DIR}/${SOURCE_DIR}/hotdata/dti/data_node/data
+CLICKHOUSE_PARENT=${DEST_DIR}/${SOURCE_DIR}/hotdata/pangduck/data_node/data
 CLICKHOUSE_DIRS=("click" "click2" "click3")
 
 # copy appliance 
 cd ${COLD_DIR}
-rsync -aqh --progress --include-from dti_include_files --exclude-from dti_backup_exclude_files ${SOURCE_DIR} ${DEST_DIR}
+rsync -aqh --progress --include-from pangduck_include_files --exclude-from pangduck_backup_exclude_files ${SOURCE_DIR} ${DEST_DIR}
 
 cd ${HOT_DIR}
-rsync -aqh --progress --include-from ${COLD_DIR}/dti_include_files --exclude-from ${COLD_DIR}/dti_backup_exclude_files ${SOURCE_DIR} ${COLD_DIR}/${DEST_DIR}
+rsync -aqh --progress --include-from ${COLD_DIR}/pangduck_include_files --exclude-from ${COLD_DIR}/pangduck_backup_exclude_files ${SOURCE_DIR} ${COLD_DIR}/${DEST_DIR}
 
 cd ${COLD_DIR}
 
