@@ -10,7 +10,7 @@ FILE_NAME=$2
 
 ftp -i -n <<EOF
   open "192.168.0.40"
-  user "ctilab" "deep@!09"
+  user "pangduck" "rhkdfur1!"
   lcd ${PARENT_DIR}
   cd /HDD2/BACKUP/appliance
   put ${FILE_NAME}

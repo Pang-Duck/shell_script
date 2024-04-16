@@ -1,9 +1,9 @@
 #!/bin/bash
 
-start=`date +%s`
+start=$(date +%s)
 
 DEFAULT_ROOT='appliance'
-OLD_VALUE='{dti_setting_ip}'
+OLD_VALUE='{pangduck_setting_ip}'
 SETTING_IP=''
 
 OLD_HOT_PATH="${DEFAULT_ROOT}/hotdata"
@@ -29,24 +29,24 @@ fi
 rm ${DEFAULT_ROOT} -rf
 
 # unpacking
-find *appliance.tar.gz |xargs -n 1 tar -zxf
+find *appliance.tar.gz | xargs -n 1 tar -zxf
 
 # change config
 ./replace_conf_data.sh ${DEFAULT_ROOT} ${OLD_VALUE} ${SETTING_IP}
 
-# if exist file in DTI dirs then rm
+# if exist file in pangduck dirs then rm
 rm ${NEW_COLD_PATH}/colddata ${NEW_HOT_PATH}/hotdata -rf
 
 # mkdir new path root
 mkdir -p ${NEW_COLD_PATH} ${NEW_HOT_PATH}
 
-# mv to DTI dirs structure
+# mv to pangduck dirs structure
 mv ${OLD_COLD_PATH} ${NEW_COLD_PATH} && mv ${OLD_HOT_PATH} ${NEW_HOT_PATH}
 
 # remove empty files
 rm ${DEFAULT_ROOT} -rf
 
-end=`date +%s`
+end=$(date +%s)
 
 # print running time
-echo running time : $((end-start)) s
+echo running time : $((end - start)) s

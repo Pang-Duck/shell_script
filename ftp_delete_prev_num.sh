@@ -11,7 +11,7 @@ MAINTENANCE_NUMBER=$2
 function ftp_ls() {
   ftp -i -n <<EOF
     open "192.168.0.40"
-    user "ctilab" "deep@!09"
+    user "pangduck" "rhkdfur1!"
     cd /HDD2/BACKUP/$1
     ls -1
 EOF
@@ -22,7 +22,7 @@ function ftp_delete_files() {
   shift
   ftp -i -n <<EOF
     open "192.168.0.40"
-    user "ctilab" "deep@!09"
+    user "pangduck" "rhkdfur1!"
     cd /HDD2/BACKUP/$path
     mdelete $@
 EOF
