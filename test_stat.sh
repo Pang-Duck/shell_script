@@ -16,7 +16,7 @@ function extract() {
 function change() {
     local e=$(extract $ENDSTAT $1)
     local b=$(extract $STARTSTAT $1)
-    local diff=$(( $e - $b ))
+    local diff=$(($e - $b))
     echo $diff
 }
 
@@ -29,7 +29,6 @@ sleep $DELAY
 #Record the end statistics
 
 ENDSTAT=$(getstat)
-
 
 #http://www.mjmwired.net/kernel/Documentation/filesystems/proc.txt#1236
 #echo "From $STARTSTAT"
@@ -45,8 +44,8 @@ IOW=$(change 5)
 
 #echo USR $USR SYS $SYS IDLE $IDLE IOW $IOW
 
-ACTIVE=$(( $USR + $SYS + $IOW ))
+ACTIVE=$(($USR + $SYS + $IOW))
 TOTAL=$(($ACTIVE + $IDLE))
-PCT=$(( $ACTIVE * 100 / $TOTAL ))
+PCT=$(($ACTIVE * 100 / $TOTAL))
 
 echo "$PCT %"

@@ -1,0 +1,44 @@
+#cloud-config
+#vim:syntax=yaml
+users:
+# A user by the name 'ec2-user' is created in the image by default.
+- default
+- name: root
+
+ssh_authorized_keys:
+- ssh-rsa ssh-key
+# In the above line, replace ssh key with the content of your ssh public key.
+chpasswd:
+list: |
+    root:accordion!@#
+
+write_files:
+- path: /usr/local/bin/setup-udev.sh
+permissions: '0755'
+content: |
+    #!/bin/bash
+    if [ -f "/var/lib/cloud/reboot_flag" ]; then
+        exit 0
+    fi
+MAC_ADDRESS=$(ip link show | awk '/ether/ {print $2; exit}')
+
+echo "SUBSYSTEM==\"net\", ACTION==\"add\", ATTR{address}==\"$MAC_ADDRESS\", NAME=\"ens192\"" >/etc/udev/rules.d/70-persistent-net.rules
+
+udevadm control --reload-rules
+udevadm trigger
+
+touch /var/lib/cloud/reboot_flag
+
+rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0
+reboot
+
+runcmd:
+- sed -i 's/^#*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+- sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+- systemctl restart sshd
+- /usr/local/bin/setup-udev.sh
+
+#bootcmd:
+#  - ip link set dev ens192 up  # 인터페이스 활성화
+#  - dhclient -r ens192
+#  - dhclient ens192

@@ -18,7 +18,7 @@ EOF
 }
 
 function ftp_delete_files() {
-  path=$1;
+  path=$1
   shift
   ftp -i -n <<EOF
     open "192.168.0.40"
@@ -28,9 +28,9 @@ function ftp_delete_files() {
 EOF
 }
 
-FILES=(`ftp_ls ${TARGET_DIR} | grep "${TARGET_DIR}.tar.gz"`)
+FILES=($(ftp_ls ${TARGET_DIR} | grep "${TARGET_DIR}.tar.gz"))
 
 if [ ${#FILES[@]} -gt "${MAINTENANCE_NUMBER}" ]; then
-  DELETE_NUMBER=`expr ${#FILES[@]} - ${MAINTENANCE_NUMBER}`
+  DELETE_NUMBER=$(expr ${#FILES[@]} - ${MAINTENANCE_NUMBER})
   ftp_delete_files ${TARGET_DIR} ${FILES[@]:0:$DELETE_NUMBER}
 fi
