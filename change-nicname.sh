@@ -46,6 +46,6 @@ elif [[ "$OS_SYSTEM" == "ubuntu" ]] || [[ "$OS_SYSTEM" == "debian" ]]; then
     debian_nic_change
 fi
 
-sleep 30
+sleep 5
 
 reboot
