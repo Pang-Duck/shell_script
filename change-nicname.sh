@@ -4,7 +4,7 @@ NIC_NAME="ens192"
 MAC_ADDRESS=$(ip link show | awk '/ether/ {print $2; exit}')
 #NIC_FILE_NAME_RHEL=""
 #NIC_FILE_NAME_DEBIAN=""
-OS_SYSTEM="cat /etc/os-release | grep -iw 'ID' | tr -d '[:punct:] ID' | head -n 1"
+OS_SYSTEM=$(cat /etc/os-release | grep -iw 'ID' | tr -d '[:punct:] ID' | head -n 1)
 
 function debian_nic_change() {
     echo "SUBSYSTEM==\"net\", ACTION==\"add\", ATTR{address}==\"$MAC_ADDRESS\", NAME=\"$NIC_NAME\"" >/etc/udev/rules.d/70-persistent-net.rules
