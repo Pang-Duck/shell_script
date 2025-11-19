@@ -25,14 +25,18 @@ function modify_grub() {
     if grep -q '^GRUB_CMDLINE_LINUX=' "$GRUB_CONFIG"; then
         CURRENT_CMD=$(grep '^GRUB_CMDLINE_LINUX=' "$GRUB_CONFIG" | cut -d'"' -f2)
 
-        if [[ -z "$CURRENT_CMD" ]]; then
-            UPDATED_CMD="$NEW_CMD"
-        else
-            UPDATED_CMD="$CURRENT_CMD $NEW_CMD"
-        fi
+        if [[ "$CURRENT_CMD" != *"net.ifnames=0"* || "$CURRENT_CMD" != *"biosdevname=0"* ]]; then
+            if [[ -z "$CURRENT_CMD" ]]; then
+                UPDATED_CMD="$NEW_CMD"
+            else
+                UPDATED_CMD="$CURRENT_CMD $NEW_CMD"
+            fi
 
-        sed -i "s|^GRUB_CMDLINE_LINUX=\".*\"|GRUB_CMDLINE_LINUX=\"$UPDATED_CMD\"|" "$GRUB_CONFIG"
+            =
+            sed -i "s|^GRUB_CMDLINE_LINUX=\".*\"|GRUB_CMDLINE_LINUX=\"$UPDATED_CMD\"|" "$GRUB_CONFIG"
+        fi
     else
+
         echo "GRUB_CMDLINE_LINUX=\"$NEW_CMD\"" >>"$GRUB_CONFIG"
     fi
 }

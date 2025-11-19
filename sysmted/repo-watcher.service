@@ -1,0 +1,15 @@
+[Unit]
+Description=Automatic RPM/DEB Repository Metadata Updater
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/repo-update.sh
+Restart=always
+RestartSec=3
+User=root
+
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
