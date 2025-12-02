@@ -6,11 +6,15 @@
 
 INVENTORY_FILE="hosts"
 
+<<<<<<< HEAD
 # 인벤토리 파일 존재 확인
 if [ ! -f "$INVENTORY_FILE" ]; then
     echo "Error: Inventory file '$INVENTORY_FILE' not found!" >&2
     exit 1
 fi
+=======
+SSH_KEY=($HOME/.ssh/*.pub)
+>>>>>>> 48af8c040f4def6db2c66a0f45359a44c9e09061
 
 # 기본 포트 추출
 port=$(grep -E "ansible_ssh_port" "$INVENTORY_FILE" | awk -F'=' '{print $2}' | tr -d ' ' || echo "22")
